@@ -8,10 +8,10 @@ const session = require('express-session');
 const app = express();
 
 // Passport Config
-require('./config/passport')(passport);
+require('./modules/passport')(passport);
 
 // DB Config
-const db = require('./config/keys').mongoURI;
+const db = require('./config').mongoURI;
 
 // Connect to MongoDB
 mongoose
@@ -28,6 +28,7 @@ app.set('view engine', 'ejs');
 
 // Express body parser
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json({type: ['application/json', 'application/x-www-form-urlencoded']}))
 
 // Express session
 app.use(
