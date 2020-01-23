@@ -13,6 +13,10 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
+<<<<<<< HEAD
+=======
+    "dotenv": "^8.2.0",
+>>>>>>> Some-Edit
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-ejs-layouts": "^2.5.0",

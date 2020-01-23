@@ -11,6 +11,7 @@ const app = express();
 require('./config/passport')(passport);
 
 // DB Config
+<<<<<<< HEAD
 const db = require('./config/keys').mongoURI;
 
 // Connect to MongoDB
@@ -19,6 +20,14 @@ mongoose
     db,
     { useNewUrlParser: true }
   )
+=======
+require('dotenv').config();
+
+// Connect to MongoDB
+mongoose.connect(`mongodb+srv://${process.env.dbURI}`,
+{ useNewUrlParser: true, useUnifiedTopology: true })
+ 
+>>>>>>> Some-Edit
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
