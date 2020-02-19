@@ -4,7 +4,7 @@
       <h1 class="text-center mb-3">
         <i class="fas fa-user-plus"></i> Register
       </h1>
-      <% include ./partials/messages %>
+      <%- include('./partials/messages.ejs'); %>
       <form action="/users/register" method="POST">
         <div class="form-group">
           <label for="name">Name</label>
