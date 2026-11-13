@@ -87,6 +87,8 @@ This project uses current major versions of the main packages, including Express
 
 ## PrivacyLib GDPR decision integration
 
+Original GDPR framework: **[PrivacyLib-REGO](https://github.com/CS-UCY-SEIT-lab/PrivacyLib-REGO)**. The PHP/JavaScript router and OPA/Rego policies bundled in `integration/privacy-lib/` come from this source repository.
+
 This branch adds an authenticated host adapter for the PrivacyLib JavaScript router and eleven OPA/Rego policies. The runtime and policies are bundled under `integration/privacy-lib/`; no sibling checkout or evaluation CSV is required. Source provenance is recorded in that directory.
 
 ### Run and configure
