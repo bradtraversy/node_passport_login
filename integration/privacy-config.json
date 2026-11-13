@@ -1,0 +1,98 @@
+{
+  "controller": {
+    "name": "PrivacyLib Inc.",
+    "address": "123 Privacy St, Data City, PC1 2AB",
+    "email": "controller@email.com"
+  },
+  "dpo": {
+    "name": "Data Protection Officer Joe Bloggs",
+    "email": "dpo@email.com"
+  },
+  "storage": {
+    "period": "2 years",
+    "criteria": "standard retention policy"
+  },
+  "services": [
+    {
+      "id": "svcA",
+      "name": "Example Service A",
+      "supports_portability": true,
+      "supported_formats": [
+        "json",
+        "csv"
+      ]
+    }
+  ],
+  "exceptions": {
+    "legal_obligation": [
+      "email"
+    ],
+    "public_interest": [],
+    "legal_claims": []
+  },
+  "supervisory_authorities": [
+    {
+      "id": "cy-0000",
+      "name": "Office of the Commissioner for Personal Data Protection (Cyprus)",
+      "country": "Cyprus",
+      "channel": "email",
+      "endpoint": "complaints@dataprotection.gov.cy"
+    },
+    {
+      "id": "ie-dpc",
+      "name": "Data Protection Commission (Ireland)",
+      "country": "Ireland",
+      "channel": "webform",
+      "endpoint": "https://forms.dataprotection.ie/contact"
+    }
+  ],
+  "lawful_purposes": [
+    "contract"
+  ],
+  "third_parties": [],
+  "request_defaults": {
+    "erasure": {
+      "reason": "withdrawn_consent",
+      "fields": [
+        "name",
+        "email"
+      ]
+    },
+    "restriction": {
+      "reason": "data_inaccuracy_suspicion",
+      "fields": [
+        "name",
+        "email"
+      ],
+      "checks": {
+        "data_correct": false,
+        "purpose_valid": true,
+        "legitimate_interest_overrides": true
+      }
+    },
+    "objection": {
+      "reason": "legitimate_interest",
+      "fields": [
+        "name",
+        "email"
+      ],
+      "checks": {
+        "processing_is_necessary": true
+      }
+    }
+  },
+  "breach_defaults": {
+    "detected": true,
+    "hours_since_detected": 0.5,
+    "summary": "Unauthorized access to a customer database.",
+    "categories": [
+      "email"
+    ],
+    "risks": [
+      "identity_theft",
+      "rights_freedoms"
+    ],
+    "mitigations": "We revoked compromised credentials and rotated secrets.",
+    "user_actions": "Be alert for phishing emails and consider changing passwords."
+  }
+}

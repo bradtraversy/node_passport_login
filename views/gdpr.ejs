@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Privacy checks</title>
+<style>body{font:16px system-ui;max-width:850px;margin:40px auto;padding:16px}button,select,textarea{font:inherit;margin:6px;padding:8px}textarea{display:block;width:90%;height:100px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eee;padding:16px}</style></head>
+<body>
+<h1>Privacy checks</h1><p>Signed in as <strong><%= user.email %></strong>. <a href="/dashboard">Back to dashboard</a></p>
+<p>Results are decisions and action plans. No profile changes or messages are sent.</p>
+<button id="grant">Give consent</button><button id="withdraw">Withdraw consent</button>
+<p>Choose an operation and its request:</p>
+<select id="policy"><% ['consent','lawful','information','access','rectification','erasure','restriction','portability','objection','complaint','breach'].forEach(function(policy){ %><option><%= policy %></option><% }) %></select>
+<textarea id="body" aria-label="JSON request">{}</textarea><button id="evaluate">Evaluate</button>
+<pre id="result" aria-live="polite">Ready.</pre>
+<input type="hidden" name="_gdpr_csrf" value="<%= csrfToken %>">
+<script>
+const csrf = document.querySelector('input[name="_gdpr_csrf"]').value;
+const examples = { rectification:{updates:{name:'Updated Name'}}, erasure:{fields:['name'],reason:'withdrawn_consent'},
+objection:{reason:'marketing'},complaint:{authority_id:'cy-0000',description:'Test complaint; do not send'},
+breach:{incident_id:'demo-incident'} };
+const result = document.getElementById('result');
+async function send(method, operation, body) {
+ try {
+  const response = await fetch('/gdpr/'+operation,{method,headers:{'Content-Type':'application/json','X-CSRF-Token':csrf},body:JSON.stringify(body)});
+  const text = await response.text();
+  let value;try{value=JSON.parse(text)}catch{value=text}
+  result.textContent='HTTP '+response.status+'\n'+JSON.stringify(value,null,2);
+ } catch(error){result.textContent=error.message}
+}
+document.getElementById('grant').onclick=()=>send('PATCH','consent',{value:'yes',withdrawn:false});
+document.getElementById('withdraw').onclick=()=>send('PATCH','consent',{value:'yes',withdrawn:true});
+document.getElementById('policy').onchange=event=>{document.getElementById('body').value=JSON.stringify(examples[event.target.value]||{},null,2)};
+document.getElementById('evaluate').onclick=()=>{
+ try{send('POST',document.getElementById('policy').value,JSON.parse(document.getElementById('body').value))}
+ catch(error){result.textContent='Invalid JSON: '+error.message}
+};
+</script></body></html>
